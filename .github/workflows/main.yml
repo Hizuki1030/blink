@@ -1,0 +1,50 @@
+name: Build and Release Arduino Code for Raspberry Pi Pico
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches:
+      - main  # mainブランチにプッシュされた時にトリガーされます
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Arduino Code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Arduino CLI
+        uses: arduino/setup-arduino-cli@v1
+        with:
+          version: '0.31.0'
+
+      - name: Install Raspberry Pi Pico board
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:mbed_rp2040
+
+      - name: Compile the sketch
+        run: |
+          mkdir -p ./build  # buildフォルダを自動作成
+          arduino-cli compile --fqbn arduino:mbed_rp2040:pico --output-dir ./build Test.ino
+
+      - name: List generated files
+        run: |
+          ls -la ./build  # buildフォルダ内のファイルを表示
+
+      - name: Commit and push generated UF2 file
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add ./build/Test.ino.uf2
+          git commit -m "Add compiled UF2 file"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
