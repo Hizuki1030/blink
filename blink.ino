@@ -7,7 +7,7 @@ void setup() {
 
     void loop() {
       digitalWrite(ledPin, HIGH);   // LEDを点灯
-        delay(500);                  // 1秒間待機
-	  digitalWrite(ledPin, LOW);    // LEDを消灯
-	    delay(500);                  // 1秒間待機
+      delay(2000);                  // 1秒間待機
+	digitalWrite(ledPin, LOW);    // LEDを消灯
+	delay(2000);                  // 1秒間待機
 	    }
