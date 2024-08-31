@@ -33,7 +33,7 @@ jobs:
       - name: Compile the sketch
         run: |
           mkdir -p ./build  # buildフォルダを自動作成
-          arduino-cli compile --fqbn arduino:mbed_rp2040:pico --output-dir ./build Test.ino
+          arduino-cli compile --fqbn arduino:mbed_rp2040:pico --output-dir ./build blink.ino
 
       - name: List generated files
         run: |
