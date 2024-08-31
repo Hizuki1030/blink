@@ -43,7 +43,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add ./build/Test.ino.uf2
+          git add ./build/blink.ino.uf2
           git commit -m "Add compiled UF2 file"
           git push origin main
         env:
